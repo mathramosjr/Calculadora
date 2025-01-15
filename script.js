@@ -2,9 +2,11 @@ let display = document.getElementById("display");
 let currentInput = ""
 let currentOperator = ""
 let calculated = false;
+let decimal = false;
 
 //função para adicionar 1 numero a conta
 function appendNumber(value){
+    if (currentInput.length >= 15) return;
     if(calculated === true){
         currentInput = "";
         calculated = false;
@@ -16,7 +18,9 @@ function appendNumber(value){
 //função para adicionar um operador na conta
 function appendOperator(operator){
     calculated = false;
+    if (currentInput.length >= 15) return;
     if(currentInput === "" && operator !== ".") return
+    if (operator === "." && currentInput.split(/[+\-*/]/).pop().includes(".")) return;
     if(/[+\-*/.]$/.test(currentInput)) return;
     currentInput += operator;
     display.textContent = currentInput;
@@ -47,3 +51,4 @@ function invert(){
     currentInput = currentInput*-1;
     display.textContent = currentInput;
 }
+
